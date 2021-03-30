@@ -37,20 +37,25 @@ const secondary = {
 }
 
 const theme = createMuiTheme({
-  palette:{
+  palette: {
     primary: {
       ...primary,
-      white: primary['0'],
-      light: primary[300],
-      main: primary[500],
-      dark: primary[800]
+      light: '#757ce8',
+      // main: '#3f50b5',
+      main: '#03a9f4',
+      dark: '#002884',
+      contrastText: '#fff',
     },
     secondary: {
       ...secondary,
-      white: primary['0'],
-      light: secondary[300],
-      main: secondary[500],
-      dark: secondary[800]
+      light: '#ff7961',
+      // main: '#f44336',
+      main: '#0288d1',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+    accent: {
+      main: '#7c4dff'
     }
   },
 })
