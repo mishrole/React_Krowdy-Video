@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {VideoGrid} from './components/VideoGrid';
-// import Video from "./components/Video";
+import { VideoRecorder } from './components/VideoRecorder';
 
 const App = () => {
-    
-    // const [url, setUrl] = useState("");
-    // const _handleChange = ({ url }) => {
-    //   console.log("TCL: _handleChange -> url", url);
-    //   setUrl(url);
-    // };
 
+    const [state, setState] = useState({
+        isActive: false,
+    });
+    
     return (
         <>
-            <VideoGrid />
+            {(!state.isActive) ? <VideoGrid /> : <VideoRecorder />}
         </>
     )
 }

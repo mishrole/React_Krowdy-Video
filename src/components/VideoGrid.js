@@ -12,9 +12,6 @@ export const VideoGrid = () => {
 
     return (
         <Container fixed>
-            {/* <div className="App">
-                <Video src={url} onChange={_handleChange} />
-            </div> */}
             <div className={classes.root}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
