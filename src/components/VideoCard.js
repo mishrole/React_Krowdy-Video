@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import cover from "../../static/images/cover.jpg";
+import cover from "../static/images/cover.jpg";
 import Fab from '@material-ui/core/Fab';
 
 export const VideoCard = ({ question }) => {
