@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
 
-const Video = ({ src, onChange = () => {} }) => {
+export const Video = ({ src, onChange = () => {} }) => {
 
   const classes = useStyles();
+  
   const videoRef = useRef();
   const chunks = useRef([]);
 
@@ -30,7 +31,6 @@ const Video = ({ src, onChange = () => {} }) => {
 
     const mediaRecorder = new MediaRecorder(stream);
     mediaRecorder.ondataavailable = function(e) {
-      console.log("push");
       chunks.current.push(e.data);
     };
 
@@ -93,7 +93,7 @@ const Video = ({ src, onChange = () => {} }) => {
   return (
     <Container fixed>
         <div className={classes.container}>
-            <video src={url} ref={videoRef} className={classes.video} autoPlay />
+            <video src={url} ref={videoRef} className={classes.video} autoPlay muted/>
 
             <div className={classes.layer}>
                 { status === "stop" ? 
@@ -125,5 +125,3 @@ const useStyles = makeStyles(() => ({
     height: "100%"
   }
 }));
-
-export default Video;

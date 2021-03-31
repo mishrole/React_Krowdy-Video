@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import cover from "../static/images/cover.jpg";
 import Fab from '@material-ui/core/Fab';
+import { Link } from 'react-router-dom';
 
 export const VideoCard = ({ question }) => {
 
@@ -15,9 +16,11 @@ export const VideoCard = ({ question }) => {
     return (
         <Card className={classes.root}>
             <div className={classes.playButtonArea}>
-                <Fab aria-label="play" className={classes.playButton}>
-                    <PlayArrowIcon/>
-                </Fab>
+                <Link to="/questions/q01">
+                    <Fab aria-label="play" className={classes.playButton}>
+                        <PlayArrowIcon/>
+                    </Fab>
+                </Link>
                 <CardMedia component="img" alt={question} height="400" className={classes.cover} image={cover} title={question} />
             </div>
             <CardContent className={classes.content}>
