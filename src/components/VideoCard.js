@@ -24,7 +24,6 @@ export const VideoCard = ({ question }) => {
                 <Typography variant="h6">{question}</Typography>
             </CardContent>
         </Card>
-        //     {/* <video src="" className={classes.video} /> */}
     )   
 }
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import {VideoGrid} from './components/VideoGrid';
+import { VideoGrid } from './components/VideoGrid';
 import { VideoRecorder } from './components/VideoRecorder';
 
 const App = () => {
 
     const [state, setState] = useState({
-        isActive: false,
+        isActive: true,
     });
     
     return (

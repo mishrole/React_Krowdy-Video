@@ -17,7 +17,7 @@ const Video = ({ src, onChange = () => {} }) => {
 
   const [VideoController, setVideoController] = useState(null);
 
-  const initializeCamera = async () => {
+  const initVideoRecorder = async () => {
 
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
@@ -29,7 +29,6 @@ const Video = ({ src, onChange = () => {} }) => {
     videoRef.current.play();
 
     const mediaRecorder = new MediaRecorder(stream);
-
     mediaRecorder.ondataavailable = function(e) {
       console.log("push");
       chunks.current.push(e.data);
@@ -42,25 +41,23 @@ const Video = ({ src, onChange = () => {} }) => {
   };
 
   const handleClickPlay = async () => {
-      
+
     let { mediaRecorder } = VideoController;
 
     if (!(videoRef.current && videoRef.current.srcObject)) {
-      const { mediaRecorder: m, stream } = await initializeCamera();
+      const { mediaRecorder: m, stream } = await initVideoRecorder();
       mediaRecorder = m;
       setVideoController({ mediaRecorder: m, stream });
     }
 
-    mediaRecorder.start(1000);
+    mediaRecorder.start(2000);
     setStatus("recording");
   };
-
+  
   const handleClickStop = async () => {
 
     const { mediaRecorder } = VideoController;
-
     mediaRecorder.stop();
-
     mediaRecorder.onstop = () => {
       const blob = new Blob(chunks.current, { type: chunks.current[0].type });
       const url = URL.createObjectURL(blob);
@@ -79,25 +76,19 @@ const Video = ({ src, onChange = () => {} }) => {
   };
 
   useEffect(() => {
-
     const main = async () => {
-
-      const { stream, mediaRecorder } = await initializeCamera();
-
+      const { stream, mediaRecorder } = await initVideoRecorder();
       setVideoController({
         stream,
         mediaRecorder
       });
     };
-    
     main();
   }, []);
 
   useEffect(() => {
     setState({ url: src });
   }, [src]);
-
-  console.log(url);
 
   return (
     <Container fixed>

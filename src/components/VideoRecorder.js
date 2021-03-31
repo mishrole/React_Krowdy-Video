@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
 import Container from "@material-ui/core/Container";
 import Video from "./Video";
 
 export const VideoRecorder = () => {
-
-    // const classes = useStyles();
 
     const [url, setUrl] = useState("");
     const handleChange = ({ url }) => {
@@ -19,9 +16,4 @@ export const VideoRecorder = () => {
         </Container>
     )
 }
-
-// const useStyles = makeStyles((theme) => ({
-
-// }));
-
 
