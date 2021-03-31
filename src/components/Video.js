@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
+import PauseIcon from '@material-ui/icons/PauseCircleOutline';
+import RecordIcon from '@material-ui/icons/RadioButtonChecked';
 
 export const Video = ({ src, onChange = () => {} }) => {
 
@@ -19,25 +21,29 @@ export const Video = ({ src, onChange = () => {} }) => {
   const [VideoController, setVideoController] = useState(null);
 
   const initVideoRecorder = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      });
+  
+      videoRef.current.srcObject = stream;
+      videoRef.current.muted = true;
+      videoRef.current.play();
+  
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = function(e) {
+        chunks.current.push(e.data);
+      };
+  
+      return {
+        stream,
+        mediaRecorder
+      };
 
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true
-    });
-
-    videoRef.current.srcObject = stream;
-    videoRef.current.muted = true;
-    videoRef.current.play();
-
-    const mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.ondataavailable = function(e) {
-      chunks.current.push(e.data);
-    };
-
-    return {
-      stream,
-      mediaRecorder
-    };
+    } catch(err) {
+      console.error(err);
+    }
   };
 
   const handleClickPlay = async () => {
@@ -50,7 +56,7 @@ export const Video = ({ src, onChange = () => {} }) => {
       setVideoController({ mediaRecorder: m, stream });
     }
 
-    mediaRecorder.start(2000);
+    mediaRecorder.start(1000);
     setStatus("recording");
   };
   
@@ -97,9 +103,9 @@ export const Video = ({ src, onChange = () => {} }) => {
 
             <div className={classes.layer}>
                 { status === "stop" ? 
-                    (<div onClick={handleClickPlay}>Play</div>) 
+                    (<div onClick={handleClickPlay}><RecordIcon /> Play</div>) 
                     :
-                    (<div onClick={handleClickStop}>Stop</div>)
+                    (<div onClick={handleClickStop}><PauseIcon /> Stop</div>)
                 }
             </div>
         </div>

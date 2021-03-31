@@ -1,13 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/styles";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import cover from "../static/images/cover.jpg";
 import Fab from '@material-ui/core/Fab';
-import { Link } from 'react-router-dom';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import Typography from '@material-ui/core/Typography';
+import cover from "../static/images/cover.jpg";
 
 export const VideoCard = ({ question }) => {
 

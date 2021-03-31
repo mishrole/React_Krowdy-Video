@@ -8,26 +8,9 @@ export const Routes = () => {
         <Link to="/questions/q01">Question 1</Link>
         <Switch>
             <Route exact path="/" component={VideoGrid} />
-            <Route exact path="/questions" component={VideoGrid} />
-            <Route exact path="/questions/:id" component={VideoRecorder} />
+            <Route path="/questions" component={VideoGrid} />
+            <Route path="/questions/:id" component={VideoRecorder} />
+            {/* <Route path="*" component={NotFound} /> */}
         </Switch>
     </BrowserRouter>
 }
-
-// import { Route, Switch } from "react-router-dom";
-// import { VideoGrid } from "../components/VideoGrid";
-
-// // Nota: Leer documentación
-
-// export const Routes = () => {
-//     return (
-//         <>
-//             <Switch>
-//                 <Route exact path="/" component={VideoGrid} />
-//                 <Route path="/home" component={VideoGrid} />
-//                 <Route path="/record" component={Record} />
-//                 <Route path="*" component={NotFound} />
-//             </Switch>
-//         </>
-//     )
-// }
