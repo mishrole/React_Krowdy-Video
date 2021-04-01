@@ -4,16 +4,11 @@ import { Typography } from '@material-ui/core';
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { VideoCard } from '../../components/home/VideoCard';
-// import { getQuestions } from '../helpers/getQuestions';
-// import { useQuestions } from '../../hooks/useQuestions';
 import MainContext from '../../context/mainContext';
 
 export const VideoGrid = () => {
 
-    // const { data: questions } = useQuestions();
-
     const { questions } = useContext(MainContext);
-
     const classes = useStyles();
 
     return (

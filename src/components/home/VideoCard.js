@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,15 +12,20 @@ import cover from "../../static/images/cover.jpg";
 export const VideoCard = ({ question }) => {
 
     const classes = useStyles();
+    const history = useHistory();
+
+    const handleClick = (questionId) => () => {
+        history.push(generatePath("/question/:questionId", { questionId }));
+    };
 
     return (
         <Card className = { classes.root }>
             <div className = { classes.playButtonArea }>
-                <Link to = { `/question/${ question.id }` }>
-                    <Fab aria-label="play" className = { classes.playButton }>
+                {/* <Link to = { `/question/${ question.id }` }> */}
+                    <Fab aria-label="play" className = { classes.playButton } onClick = { handleClick(question.id) }>
                         <PlayArrowIcon/>
                     </Fab>
-                </Link>
+                {/* </Link> */}
                 <CardMedia component="img" alt = { question.value } height="400" className = { classes.cover } image = { cover } title = { question.value } />
             </div>
             <CardContent className = { classes.content }>

@@ -22,8 +22,6 @@ export const VideoRecorder = () => {
         return questions.find(({ id}) => id === questionId );
     }, [questionId, questions]);
 
-    console.log(question.value)
-
     const [url, setUrl] = useState("");
     
     const handleChange = ({ url }) => {
@@ -32,12 +30,6 @@ export const VideoRecorder = () => {
 
     return (
         <>
-            {/* <Container fixed>
-                <Link to="/questions/" className = { classes.iconButton }><ArrowBackIcon />Volver</Link>
-                <Typography className = { classes.title } variant="h5">¿Te gusta el pan con pollo?</Typography>
-                <Video src = { url } onChange = { handleChange } />
-            </Container> */}
-
             <div className = { classes.root }>
                 <AppBar position="static">
                     <Toolbar>
