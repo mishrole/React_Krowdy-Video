@@ -11,7 +11,8 @@ export const Video = ({ src, onChange = () => {} }) => {
   const videoRef = useRef();
   const chunks = useRef([]);
 
-  const [{ url, type }, setState] = useState({
+  // const [{ url, type }, setState] = useState({
+  const [{ url }, setState] = useState({
     url: src,
     type: "recording"
   });

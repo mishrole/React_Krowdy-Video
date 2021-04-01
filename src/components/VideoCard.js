@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,17 +14,17 @@ export const VideoCard = ({ question }) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root}>
-            <div className={classes.playButtonArea}>
-                <Link to="/questions/q01">
-                    <Fab aria-label="play" className={classes.playButton}>
+        <Card className = { classes.root }>
+            <div className = { classes.playButtonArea }>
+                <Link to = { `/question/${ question.id }` }>
+                    <Fab aria-label="play" className = { classes.playButton }>
                         <PlayArrowIcon/>
                     </Fab>
                 </Link>
-                <CardMedia component="img" alt={question} height="400" className={classes.cover} image={cover} title={question} />
+                <CardMedia component="img" alt = { question.value } height="400" className = { classes.cover } image = { cover } title = { question.value } />
             </div>
-            <CardContent className={classes.content}>
-                <Typography variant="h6">{question}</Typography>
+            <CardContent className = { classes.content }>
+                <Typography variant="h6">{ question.value }</Typography>
             </CardContent>
         </Card>
     )   
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
       },
     playButton: {
         bottom: 0,
-        margin: 15,
+        margin: theme.spacing(2),
         position: 'absolute',
         right: 0,
     },
