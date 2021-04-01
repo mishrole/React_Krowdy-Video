@@ -109,9 +109,17 @@ export const Video = ({ src, onChange = () => {} }) => {
 
             <div className = { classes.layer }>
                 { status === "stop" ? 
-                    (<div onClick = { handleClickPlay } className = { classes.iconContainer }><RecordIcon className = { classes.icon }/> Play</div>) 
+                    (
+                      <div onClick = { handleClickPlay } className = { classes.iconContainer }>
+                        <RecordIcon className = { classes.icon }/> Play
+                      </div>
+                    ) 
                     :
-                    (<div onClick = { handleClickStop } className = { classes.iconContainer }><PauseIcon className = { classes.icon }/> Stop</div>)
+                    (
+                      <div onClick = { handleClickStop } className = { classes.iconContainer }>
+                        <PauseIcon className = { classes.icon }/> Stop
+                      </div>
+                    )
                 }
             </div>
         </div>

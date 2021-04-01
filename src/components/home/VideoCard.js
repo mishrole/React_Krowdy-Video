@@ -21,11 +21,9 @@ export const VideoCard = ({ question }) => {
     return (
         <Card className = { classes.root }>
             <div className = { classes.playButtonArea }>
-                {/* <Link to = { `/question/${ question.id }` }> */}
-                    <Fab aria-label="play" className = { classes.playButton } onClick = { handleClick(question.id) }>
-                        <PlayArrowIcon/>
-                    </Fab>
-                {/* </Link> */}
+                <Fab aria-label="play" className = { classes.playButton } onClick = { handleClick(question.id) }>
+                    <PlayArrowIcon/>
+                </Fab>
                 <CardMedia component="img" alt = { question.value } height="400" className = { classes.cover } image = { cover } title = { question.value } />
             </div>
             <CardContent className = { classes.content }>
