@@ -6,7 +6,8 @@ export const getQuestions = async () => {
     const questions = data.map(question => {
         return {
             id: UUID.v4(),
-            value: question
+            value: question,
+            answerUrl: ""
         }
     });
 

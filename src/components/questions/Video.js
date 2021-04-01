@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import PauseIcon from '@material-ui/icons/PauseCircleOutline';
 import RecordIcon from '@material-ui/icons/RadioButtonChecked';
@@ -84,11 +84,16 @@ export const Video = ({ src, onChange = () => {} }) => {
 
   useEffect(() => {
     const main = async () => {
-      const { stream, mediaRecorder } = await initVideoRecorder();
-      setVideoController({
-        stream,
-        mediaRecorder
-      });
+      try {
+        const { stream, mediaRecorder } = await initVideoRecorder(); // Cannot destructure property 'stream' of '(intermediate value)' as it is undefined.
+        setVideoController({
+          stream,
+          mediaRecorder
+        });
+        
+      } catch (error) {
+        console.error(error); // DOMException: Could not start video source
+      }
     };
     main();
   }, []);
@@ -99,14 +104,14 @@ export const Video = ({ src, onChange = () => {} }) => {
 
   return (
     <Container fixed>
-        <div className={classes.container}>
-            <video src={url} ref={videoRef} className={classes.video} autoPlay muted/>
+        <div className = { classes.container }>
+            <video src = { url } ref = { videoRef } className = { classes.video } autoPlay muted/>
 
-            <div className={classes.layer}>
+            <div className = { classes.layer }>
                 { status === "stop" ? 
-                    (<div onClick={handleClickPlay}><RecordIcon /> Play</div>) 
+                    (<div onClick = { handleClickPlay } className = { classes.iconContainer }><RecordIcon className = { classes.icon }/> Play</div>) 
                     :
-                    (<div onClick={handleClickStop}><PauseIcon /> Stop</div>)
+                    (<div onClick = { handleClickStop } className = { classes.iconContainer }><PauseIcon className = { classes.icon }/> Stop</div>)
                 }
             </div>
         </div>
@@ -130,5 +135,13 @@ const useStyles = makeStyles(() => ({
     transform: "translateY(calc( -100%))",
     width: "100%",
     height: "100%"
+  },
+  iconContainer: {
+    display: "flex",
+    cursor: "pointer",
+    position: "absolute"
+  },
+  icon: {
+    padding: "0 0.25rem"
   }
 }));
