@@ -5,10 +5,10 @@ const MainContext = createContext();
 
 const MainContextProvider = ({ children }) => {
     
-    const { data: questions } = useQuestions();
+    const { state: { data: questions }, updateUrlAnswer } = useQuestions();
 
     return (
-        <MainContext.Provider value={ { questions } }>
+        <MainContext.Provider value={ { questions, updateUrlAnswer } }>
             { children }
         </MainContext.Provider>
     )

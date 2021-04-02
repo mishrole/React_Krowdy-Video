@@ -24,7 +24,7 @@ export const VideoCard = ({ question }) => {
                 <Fab aria-label="play" className = { classes.playButton } onClick = { handleClick(question.id) }>
                     <PlayArrowIcon/>
                 </Fab>
-                <CardMedia component="img" alt = { question.value } height="400" className = { classes.cover } image = { cover } title = { question.value } />
+                <CardMedia component="img" alt = { question.value } height="500" className = { classes.cover } image = { cover } title = { question.value } />
             </div>
             <CardContent className = { classes.content }>
                 <Typography variant="h6">{ question.value }</Typography>
