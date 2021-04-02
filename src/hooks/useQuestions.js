@@ -18,34 +18,19 @@ export const useQuestions = () => {
         })
     }, []);
 
+    // Error
+
     const updateUrlAnswer = (questions, questionId, videoUrl) => {
-        
-        // const data = questions[0];
-        // const { data } = questions;
 
-        // setState(produce(draft => {
-        //     const question = draft.find(({  id }) =>  id === questionId);
-        //     question.answerUrl = videoUrl;
-        // }))
+        const question = questions.find(({ id }) =>  id === questionId);
 
-        // setState((test) =>
-        
-        //     produce(test, (draftQuestions) => {
-        //         // console.log(draftQuestions)
-
-        //         const question = draftQuestions.find(({  id }) =>  id === questionId);
-        //         question.answerUrl = videoUrl;
-        //     })
-        // );
-
-        const { data } = questions;
-
-        setState(() => {
-            produce(data, draft => {
-                const question = draft.find(({  id }) =>  id === questionId);
+        if(question) {
+            setState(() => {
                 question.answerUrl = videoUrl;
+                const returnedTest = Object.assign(questions, question);
+                return {data: returnedTest}
             })
-        })
+        }
     };
 
     return { state, updateUrlAnswer };
