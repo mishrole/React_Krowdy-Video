@@ -1,13 +1,15 @@
-import produce from 'immer';
-import { useState, useEffect, useContext } from 'react';
+// import produce from 'immer';
+import { useState, useEffect } from 'react';
 import { getQuestions } from '../helpers/getQuestions';
-import MainContext from '../context/mainContext';
+// import MainContext from '../context/mainContext';
 
 export const useQuestions = () => {
     
     const [state, setState] = useState({
         data: []
     });
+
+    // Get questions + UUID
 
     useEffect(() => {
         getQuestions()
@@ -18,7 +20,7 @@ export const useQuestions = () => {
         })
     }, []);
 
-    // Error
+    // Update Url (context, id, newUrl)
 
     const updateUrlAnswer = (questions, questionId, videoUrl) => {
 
@@ -27,10 +29,11 @@ export const useQuestions = () => {
         if(question) {
             setState(() => {
                 question.answerUrl = videoUrl;
-                const returnedTest = Object.assign(questions, question);
-                return {data: returnedTest}
+                return {data: Object.assign(questions, question)}
             })
         }
+
+        console.log(state)
     };
 
     return { state, updateUrlAnswer };
