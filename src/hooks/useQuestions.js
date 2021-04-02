@@ -29,7 +29,7 @@ export const useQuestions = () => {
         if(question) {
             setState(() => {
                 question.answerUrl = videoUrl;
-                return {data: Object.assign(questions, question)}
+                return { data: Object.assign(questions, question) }
             })
         }
 

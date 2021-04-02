@@ -19,7 +19,7 @@ export const VideoRecorder = () => {
     const { questions } = useContext(MainContext);
 
     const question = useMemo(() => {
-        return questions.find(({ id}) => id === questionId );
+        return questions.find(({ id }) => id === questionId );
     }, [questionId, questions]);
 
     const [url, setUrl] = useState("");

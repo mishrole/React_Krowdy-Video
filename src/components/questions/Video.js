@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import PauseIcon from '@material-ui/icons/PauseCircleOutline';
 import RecordIcon from '@material-ui/icons/RadioButtonChecked';
 import Button from "@material-ui/core/Button";
+import GetAppIcon from '@material-ui/icons/GetApp';
 import MainContext from '../../context/mainContext';
 
 export const Video = ({ src, onChange = () => {} }) => {
@@ -13,17 +14,22 @@ export const Video = ({ src, onChange = () => {} }) => {
   
   const { questionId } = useParams();
   const { questions, updateUrlAnswer } = useContext(MainContext);
-
+  
   const videoRef = useRef();
+  const downloadRef = useRef();
   const chunks = useRef([]);
-
+  
   // const [{ url, type }, setState] = useState({
   const [{ url }, setState] = useState({
     url: src,
     type: "recording"
   });
-
+  
   const [status, setStatus] = useState("stop");
+
+  const [VideoController, setVideoController] = useState(null);
+
+  const currentQuestion = questions.find(({ id }) =>  id === questionId);
 
   const initVideoRecorder = async () => {
     try {
@@ -55,8 +61,6 @@ export const Video = ({ src, onChange = () => {} }) => {
     }
   };
 
-  const [VideoController, setVideoController] = useState(null);
-
   const handleClickPlay = async () => {
 
     let { mediaRecorder } = VideoController;
@@ -77,7 +81,7 @@ export const Video = ({ src, onChange = () => {} }) => {
     mediaRecorder.stop();
     mediaRecorder.onstop = () => {
       // const blob = new Blob(chunks.current, { type: chunks.current[0].type });
-      const blob = new Blob(chunks.current, { type: 'video/webm' });
+      const blob = new Blob(chunks.current, { type: chunks.current[0].type });
       const url = URL.createObjectURL(blob);
       let stream = videoRef.current.srcObject;
       let tracks = stream.getTracks();
@@ -88,12 +92,20 @@ export const Video = ({ src, onChange = () => {} }) => {
 
       updateUrlAnswer(questions, questionId, url);
 
+      downloadRef.current.href = url;
+      //"test.webm"
+      downloadRef.current.download = `${currentQuestion.id}.webm`;
+
       videoRef.current.srcObject = null;
       onChange({ url, chunks: chunks.current });
       chunks.current = [];
       setStatus("stop");
     };
   };
+
+  const handleClickDownload = async () => {
+    downloadRef.current.click();
+  }
 
   useEffect(() => {
     const main = async () => {
@@ -118,7 +130,7 @@ export const Video = ({ src, onChange = () => {} }) => {
   return (
     <Container fixed>
         <div className = { classes.container }>
-            <video src = { url } ref = { videoRef } className = { classes.video } autoPlay muted/>
+            <video src = { url } ref = { videoRef } className = { classes.video } autoPlay/>
 
             {/* <div className = { classes.layer }>
                 { status === "stop" ? 
@@ -152,7 +164,26 @@ export const Video = ({ src, onChange = () => {} }) => {
               </Button>
             )
           }
-          
+          {
+            
+            currentQuestion.answerUrl !== ""
+            ?
+            (
+                <>
+                  <Button variant="contained" color="inherit" disableElevation className = { classes.button } onClick = { handleClickDownload }>
+                    <GetAppIcon className = { classes.icon }/> Download
+                  </Button>
+                  <a ref = { downloadRef } href="/" className = { classes.download }> Download Ref </a>
+                </>
+            )
+            :
+            (
+              <Button variant="contained" color="inherit" disableElevation className = { classes.button } disabled>
+                <GetAppIcon className = { classes.icon }/> Waiting...
+              </Button>
+            )
+            
+          }
         </div>
     </Container>
   );
@@ -190,5 +221,8 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     margin: "1rem"
+  },
+  download: {
+    display: "none"
   }
 }));
