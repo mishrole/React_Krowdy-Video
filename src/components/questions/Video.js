@@ -147,7 +147,11 @@ export const Video = ({ src, onChange = () => {} }) => {
       questionId = Object.values(objectQuestions)[0].id;
       history.push(generatePath("/question/:questionId", { questionId }));
     }
+
+    console.log(currentQuestion.answerUrl)
   }
+
+  // Bug main
 
   useEffect(() => {
     const main = async () => {
@@ -173,7 +177,7 @@ export const Video = ({ src, onChange = () => {} }) => {
     <Container fixed>
         <div className = { classes.container }>
           {
-            currentQuestion.id !== ""
+            currentQuestion.answerUrl !== ""
             ?
             (
               <video src = { currentQuestion.answerUrl } ref = { videoRef } className = { classes.video } autoPlay/>
@@ -183,23 +187,6 @@ export const Video = ({ src, onChange = () => {} }) => {
               <video src = { url } ref = { videoRef } className = { classes.video } autoPlay/>
             )
           }
-            {/* <video src = { url } ref = { videoRef } className = { classes.video } autoPlay/> */}
-
-            {/* <div className = { classes.layer }>
-                { status === "stop" ? 
-                    (
-                      <div onClick = { handleClickPlay } className = { classes.iconContainer }>
-                        <RecordIcon className = { classes.icon }/> Start recording
-                      </div>
-                    ) 
-                    :
-                    (
-                      <div onClick = { handleClickStop } className = { classes.iconContainer }>
-                        <PauseIcon className = { classes.icon }/> Stop recording
-                      </div>
-                    )
-                }
-            </div> */}
         </div>
         <div className= { classes.buttonsContainer }>
           {
@@ -241,7 +228,7 @@ export const Video = ({ src, onChange = () => {} }) => {
 
         <div className = { classes.controlsContainer }>
           <Button variant="contained" color="primary" disableElevation className = { classes.button } onClick = { handleClickPrevious }>Previous</Button>
-            <Button variant="contained" color="primary" disableElevation className = { classes.button } onClick = { handleClickNext }>Next</Button>
+          <Button variant="contained" color="primary" disableElevation className = { classes.button } onClick = { handleClickNext }>Next</Button>
         </div>
     </Container>
   );
