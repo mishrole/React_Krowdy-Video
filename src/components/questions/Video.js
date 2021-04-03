@@ -121,8 +121,20 @@ export const Video = ({ src, onChange = () => {} }) => {
   const currentIndex = getCurrentIndex(objectQuestions, currentQuestion);
 
   const handleClickPrevious = () => {
+    const previousIndex = parseInt(currentIndex)-1;
+    let previousObject;
 
-    
+    if(previousIndex < 0) {
+      previousObject = Object.values(objectQuestions)[parseInt(questions.length)-1];
+    } else {
+      previousObject = Object.values(objectQuestions)[previousIndex];
+    }
+
+    let questionId = previousObject.id;
+    history.push(generatePath("/question/:questionId", { questionId }));
+
+    console.log(previousObject)
+    console.log(questionId)
       
    }
 
