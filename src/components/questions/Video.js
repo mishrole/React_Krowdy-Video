@@ -117,36 +117,29 @@ export const Video = ({ src, onChange = () => {} }) => {
     downloadRef.current.click();
   }
 
+  const objectQuestions = {...questions};
+  const currentIndex = getCurrentIndex(objectQuestions, currentQuestion);
+
   const handleClickPrevious = () => {
-    // let keys = Object.keys(questions);
-    // let nextIndex = keys.indexOf({currentQuestion}) +1;
-    // let nextItem = keys[nextIndex];
 
     
       
    }
 
   const handleClickNext = () => {
-    const objectQuestions = {...questions};
-    const currentIndex = getCurrentIndex(objectQuestions, currentQuestion);
+    // const objectQuestions = {...questions};
+    // const currentIndex = getCurrentIndex(objectQuestions, currentQuestion);
     const nextIndex = parseInt(currentIndex)+1;
     const nextObject = Object.values(objectQuestions)[nextIndex];
-    let questionId = nextObject.id;
+    let questionId;
 
     if(nextIndex < questions.length) {
+      questionId = nextObject.id;
       history.push(generatePath("/question/:questionId", { questionId }));
     } else {
       questionId = Object.values(objectQuestions)[0].id;
       history.push(generatePath("/question/:questionId", { questionId }));
     }
-    
-    
-    console.log(nextIndex);
-    console.log(nextObject);
-    console.log(questionId)
-    // console.log(questions.length)
-    // console.log(currentIndex)
-    // if(currentIndex )
   }
 
   useEffect(() => {
