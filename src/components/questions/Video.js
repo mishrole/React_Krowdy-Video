@@ -132,15 +132,10 @@ export const Video = ({ src, onChange = () => {} }) => {
 
     let questionId = previousObject.id;
     history.push(generatePath("/question/:questionId", { questionId }));
-
-    console.log(previousObject)
-    console.log(questionId)
       
    }
 
   const handleClickNext = () => {
-    // const objectQuestions = {...questions};
-    // const currentIndex = getCurrentIndex(objectQuestions, currentQuestion);
     const nextIndex = parseInt(currentIndex)+1;
     const nextObject = Object.values(objectQuestions)[nextIndex];
     let questionId;
@@ -177,7 +172,18 @@ export const Video = ({ src, onChange = () => {} }) => {
   return (
     <Container fixed>
         <div className = { classes.container }>
-            <video src = { url } ref = { videoRef } className = { classes.video } autoPlay/>
+          {
+            currentQuestion.id !== ""
+            ?
+            (
+              <video src = { currentQuestion.answerUrl } ref = { videoRef } className = { classes.video } autoPlay/>
+            )
+            :
+            (
+              <video src = { url } ref = { videoRef } className = { classes.video } autoPlay/>
+            )
+          }
+            {/* <video src = { url } ref = { videoRef } className = { classes.video } autoPlay/> */}
 
             {/* <div className = { classes.layer }>
                 { status === "stop" ? 
