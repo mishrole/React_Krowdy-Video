@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from 'react-router-dom';
+import { useParams, generatePath, useHistory } from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 import PauseIcon from '@material-ui/icons/PauseCircleOutline';
 import RecordIcon from '@material-ui/icons/RadioButtonChecked';
@@ -11,6 +11,7 @@ import MainContext from '../../context/mainContext';
 export const Video = ({ src, onChange = () => {} }) => {
 
   const classes = useStyles();
+  const history = useHistory();
   
   const { questionId } = useParams();
   const { questions, updateUrlAnswer } = useContext(MainContext);
@@ -39,7 +40,6 @@ export const Video = ({ src, onChange = () => {} }) => {
         audio: true
       });
       
-      // videoRef.current.controls = true;
       videoRef.current.srcObject = stream;
       videoRef.current.muted = true;
   
@@ -78,9 +78,10 @@ export const Video = ({ src, onChange = () => {} }) => {
   const handleClickStop = async () => {
 
     const { mediaRecorder } = VideoController;
+
     mediaRecorder.stop();
+
     mediaRecorder.onstop = () => {
-      // const blob = new Blob(chunks.current, { type: chunks.current[0].type });
       const blob = new Blob(chunks.current, { type: chunks.current[0].type });
       const url = URL.createObjectURL(blob);
       let stream = videoRef.current.srcObject;
@@ -93,7 +94,6 @@ export const Video = ({ src, onChange = () => {} }) => {
       updateUrlAnswer(questions, questionId, url);
 
       downloadRef.current.href = url;
-      //"test.webm"
       downloadRef.current.download = `${currentQuestion.id}.webm`;
 
       videoRef.current.srcObject = null;
@@ -103,8 +103,50 @@ export const Video = ({ src, onChange = () => {} }) => {
     };
   };
 
+  const getCurrentIndex = (object, currentId) => {
+    for (var prop in object) {
+      if (object.hasOwnProperty(prop)) {
+          if(object[prop].id === currentId.id) {
+            return prop
+          }
+      }
+    }
+  }
+
   const handleClickDownload = async () => {
     downloadRef.current.click();
+  }
+
+  const handleClickPrevious = () => {
+    // let keys = Object.keys(questions);
+    // let nextIndex = keys.indexOf({currentQuestion}) +1;
+    // let nextItem = keys[nextIndex];
+
+    
+      
+   }
+
+  const handleClickNext = () => {
+    const objectQuestions = {...questions};
+    const currentIndex = getCurrentIndex(objectQuestions, currentQuestion);
+    const nextIndex = parseInt(currentIndex)+1;
+    const nextObject = Object.values(objectQuestions)[nextIndex];
+    let questionId = nextObject.id;
+
+    if(nextIndex < questions.length) {
+      history.push(generatePath("/question/:questionId", { questionId }));
+    } else {
+      questionId = Object.values(objectQuestions)[0].id;
+      history.push(generatePath("/question/:questionId", { questionId }));
+    }
+    
+    
+    console.log(nextIndex);
+    console.log(nextObject);
+    console.log(questionId)
+    // console.log(questions.length)
+    // console.log(currentIndex)
+    // if(currentIndex )
   }
 
   useEffect(() => {
@@ -185,14 +227,19 @@ export const Video = ({ src, onChange = () => {} }) => {
             
           }
         </div>
+
+        <div className = { classes.controlsContainer }>
+          <Button variant="contained" color="primary" disableElevation className = { classes.button } onClick = { handleClickPrevious }>Previous</Button>
+            <Button variant="contained" color="primary" disableElevation className = { classes.button } onClick = { handleClickNext }>Next</Button>
+        </div>
     </Container>
   );
 };
 
 const useStyles = makeStyles(() => ({
   container: {
-    height: 600,
-    width: 800,
+    height: 375,
+    width: 500,
     backgroundColor: "red",
     margin: "0 auto"
   },
@@ -224,5 +271,9 @@ const useStyles = makeStyles(() => ({
   },
   download: {
     display: "none"
+  },
+  controlsContainer: {
+    display: "flex",
+    justifyContent: "space-around"
   }
 }));
